@@ -264,36 +264,25 @@ var InstantClick = function(document, location) {
     return el.tagName == 'META' || el.tagName == 'SCRIPT' || el.tagName == 'LINK' || el.tagName == 'STYLE';
   }
 
-  function containsElement(needle, haystack){
-    for (var i = haystack.length; i--;) {
-      if (!shouldCopyElement(haystack[i]))
-        continue
-
-      if (haystack[i].outerHTML == needle.outerHTML)
-        return true
-    }
-
-    return false
-  }
-
   function updateHeadResources(head){
     var elems = head.children,
         currElems = document.head.children
 
     // We remove and readd everything to ensure that script tags get executed again
     for (var i = currElems.length; i--;){
-      if (shouldCopyElement(currElems[i]))
+      if (shouldCopyElement(currElems[i])){
         document.head.removeChild(currElems[i])
+      }
     }
     for (var i = elems.length; i--;){
-      if (shouldCopyElement(elems[i]))
+      if (shouldCopyElement(elems[i])){
         document.head.appendChild(elems[i].cloneNode(true))
+      }
     }
   }
 
   function updateAttributes(source, dest){
-    var attr,
-        remove = []
+    var attr
 
     for (var i=source.attributes.length; i--;){
       attr = source.attributes[i]
@@ -306,11 +295,6 @@ var InstantClick = function(document, location) {
     // We don't remove existing attributes to avoid breaking attrs
     // which have been added by clientside js (i.e. Typekit)
   }
-
-  function containsElement(needle, haystack){
-    for (var i = haystack.length; i--;) {
-      if (!shouldCopyElement(haystack[i]))
-        continue
 
   function bindEvents() {
     var de = document.documentElement
@@ -334,10 +318,8 @@ var InstantClick = function(document, location) {
       script = scripts[i]
       if (script.hasAttribute('data-no-instant')) {
         continue
-
-      if (!containsElement(currElems[i], elems)){
-        remove.push(currElems[i])
       }
+
       copy = script.cloneNode(true)
       script.parentNode.replaceChild(copy, script)
     }
