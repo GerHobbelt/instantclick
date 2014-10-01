@@ -294,7 +294,9 @@ var InstantClick = function(document, location) {
 
   function updateHeadResources(head){
     var elems = head.children,
-        currElems = document.head.children
+        currElems = document.head.children,
+        remove = [],
+        add = []
 
     // Remove all elements in the old head but not the new
     for (var i = currElems.length; i--;) {
