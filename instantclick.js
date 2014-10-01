@@ -183,7 +183,6 @@ var InstantClick = function(document, location) {
   function click(e) {
     var a = getLinkTarget(e.target)
     if (!a || !isPreloadable(a)) return
-    if (e.defaultPrevented || e.returnValue === false) return
 
     if (e.which > 1 || e.metaKey || e.ctrlKey) { // Opening in new tab
       return
