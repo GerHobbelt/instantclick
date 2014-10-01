@@ -305,11 +305,11 @@ var InstantClick = function(document, location) {
 
     // We remove and add in a seperate step to not mess with the iteration above by
     // manipulating the children as we iterate through them
-    for (var i = remove.length; i--;){
-      document.head.removeChild(remove[i])
-    }
     for (var i = add.length; i--;){
       document.head.appendChild(add[i].cloneNode(true))
+    }
+    for (var i = remove.length; i--;){
+      document.head.removeChild(remove[i])
     }
   }
 
