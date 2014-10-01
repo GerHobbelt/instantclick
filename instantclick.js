@@ -183,6 +183,7 @@ var InstantClick = function(document, location) {
   function click(e) {
     var a = getLinkTarget(e.target)
     if (!a || !isPreloadable(a)) return
+    if (e.defaultPrevented || e.returnValue === false) return
 
     if (e.which > 1 || e.metaKey || e.ctrlKey) { // Opening in new tab
       return
@@ -277,37 +278,16 @@ var InstantClick = function(document, location) {
 
   function updateHeadResources(head){
     var elems = head.children,
-        currElems = document.head.children,
-        remove = [],
-        add = []
+        currElems = document.head.children
 
-    // Remove all elements in the old head but not the new
-    for (var i = currElems.length; i--;) {
-      if (!shouldCopyElement(currElems[i]))
-        continue
-
-      if (!containsElement(currElems[i], elems)){
-        remove.push(currElems[i])
-      }
+    // We remove and readd everything to ensure that script tags get executed again
+    for (var i = currElems.length; i--;){
+      if (shouldCopyElement(currElems[i]))
+        document.head.removeChild(currElems[i])
     }
-
-    // Add all elements in the new head but not the old
-    for (var i = elems.length; i--;) {
-      if (!shouldCopyElement(elems[i]))
-        continue
-
-      if (!containsElement(elems[i], currElems)){
-        add.push(elems[i])
-      }
-    }
-
-    // We remove and add in a seperate step to not mess with the iteration above by
-    // maniuplating the children as we iterate through them
-    for (var i = remove.length; i--;){
-      document.head.removeChild(remove[i])
-    }
-    for (var i = add.length; i--;){
-      document.head.appendChild(add[i].cloneNode(true))
+    for (var i = elems.length; i--;){
+      if (shouldCopyElement(elems[i]))
+        document.head.appendChild(elems[i].cloneNode(true))
     }
   }
 
@@ -323,20 +303,14 @@ var InstantClick = function(document, location) {
       }
     }
 
-    for (var i=dest.attributes.length; i--;){
-      attr = dest.attributes[i]
-
-      if (attr.specified && source.getAttribute(attr.name) !== attr.value){
-        remove.push(attr.name)
-      }
-    }
-
-    for (var i=remove.length; i--;){
-      dest.removeAttribute(remove[i]);
-    }
+    // We don't remove existing attributes to avoid breaking attrs
+    // which have been added by clientside js (i.e. Typekit)
   }
 
-  ////////// MAIN FUNCTIONS //////////
+  function containsElement(needle, haystack){
+    for (var i = haystack.length; i--;) {
+      if (!shouldCopyElement(haystack[i]))
+        continue
 
   function bindEvents() {
     var de = document.documentElement
@@ -360,6 +334,9 @@ var InstantClick = function(document, location) {
       script = scripts[i]
       if (script.hasAttribute('data-no-instant')) {
         continue
+
+      if (!containsElement(currElems[i], elems)){
+        remove.push(currElems[i])
       }
       copy = script.cloneNode(true)
       script.parentNode.replaceChild(copy, script)
@@ -719,7 +696,7 @@ var InstantClick = function(document, location) {
 
       $history[$currentLocationWithoutHash].scrollY = pageYOffset
       $currentLocationWithoutHash = loc
-      changePage($history[loc].doc, false, $history[loc].scrollY)
+      changePage($history[loc].doc, null, $history[loc].scrollY)
     })
   }
 
