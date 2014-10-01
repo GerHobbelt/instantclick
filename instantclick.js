@@ -42,6 +42,22 @@ var InstantClick = function(document, location) {
     return url.substr(0, index)
   }
 
+  function cloneNode(el) {
+    // We can't use the native cloneNode as it won't reexecute script tags
+    var newEl = document.createElement(el.tagName),
+        attr
+
+    for (var i=el.attributes.length; i--;){
+      attr = el.attributes[i]
+
+      if (attr.specified){
+        newEl.setAttribute(attr.name, attr.value)
+      }
+    }
+
+    return newEl
+  }
+
   function getLinkTarget(target) {
     while (target && target.nodeName != 'A') {
       target = target.parentNode
@@ -278,9 +294,7 @@ var InstantClick = function(document, location) {
 
   function updateHeadResources(head){
     var elems = head.children,
-        currElems = document.head.children,
-        remove = [],
-        add = []
+        currElems = document.head.children
 
     // Remove all elements in the old head but not the new
     for (var i = currElems.length; i--;) {
@@ -306,7 +320,7 @@ var InstantClick = function(document, location) {
     // We remove and add in a seperate step to not mess with the iteration above by
     // manipulating the children as we iterate through them
     for (var i = add.length; i--;){
-      document.head.appendChild(add[i].cloneNode(true))
+      document.head.appendChild(cloneNode(add[i]))
     }
     for (var i = remove.length; i--;){
       document.head.removeChild(remove[i])
@@ -353,7 +367,7 @@ var InstantClick = function(document, location) {
       if (script.hasAttribute('data-no-instant')) {
         continue
       }
-      copy = script.cloneNode(true)
+      copy = cloneNode(script)
       script.parentNode.replaceChild(copy, script)
     }
   }
