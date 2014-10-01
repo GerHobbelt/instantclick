@@ -287,7 +287,8 @@ var InstantClick = function(document, location) {
       if (!shouldCopyElement(currElems[i]))
         continue
 
-      if (!containsElement(currElems[i], elems)){
+      // We always remove and readd script tags so they get reexecuted
+      if (!containsElement(currElems[i], elems) || currElems[i].tagName == 'SCRIPT') {
         remove.push(currElems[i])
       }
     }
@@ -297,7 +298,7 @@ var InstantClick = function(document, location) {
       if (!shouldCopyElement(elems[i]))
         continue
 
-      if (!containsElement(elems[i], currElems)){
+      if (!containsElement(elems[i], currElems) || elems[i].tagName == 'SCRIPT') {
         add.push(elems[i])
       }
     }
