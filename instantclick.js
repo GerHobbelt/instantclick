@@ -688,3 +688,5 @@ var InstantClick = function(document, location) {
   }
 
 }(document, location);
+
+module.exports = InstantClick;
