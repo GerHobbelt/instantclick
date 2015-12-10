@@ -14,13 +14,17 @@
   "options": {
     "properties": {
       "progressBar": {
+        "order": 1,
         "description": "When navigating from one page to another, show a loading progress bar at the top of the page.",
         "title": "Show progress bar",
         "type": "boolean"
       },
       "progressBarColor": {
+        "order": 2,
+        "showIf": {
+          "progressBar": true
+        },
         "default": "#2299dd",
-        "description": "The color of the progress bar. (Requires \"Show progress bar\" to be checked.)",
         "format": "color",
         "title": "Progress bar color",
         "type": "string"
