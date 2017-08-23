@@ -1,6 +1,6 @@
 {
   "name": "@teamthread/instantclick",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "(Thread fork) InstantClick makes following links in your website instant.",
   "main": "src/instantclick.js",
   "directories": {
