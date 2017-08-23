@@ -956,6 +956,7 @@ var instantclick
     supported: supported,
     init: init,
     on: on,
+    addBodyEventListeners: addBodyEventListeners,
     setTimeout: setTimeout,
     setInterval: setInterval,
     clearTimeout: clearTimeout,
