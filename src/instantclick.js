@@ -951,11 +951,18 @@ var instantclick
 
   ////////////////////
 
+  function manualPageChange(new_url) {
+    $currentLocationWithoutHash = new_url;
+    $history[$currentLocationWithoutHash] = {
+      scrollY: pageYOffset
+    };
+  }
 
   return {
     supported: supported,
     init: init,
     on: on,
+    manualPageChange: manualPageChange,
     addBodyEventListeners: addBodyEventListeners,
     setTimeout: setTimeout,
     setInterval: setInterval,
