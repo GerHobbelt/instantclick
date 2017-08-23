@@ -1,7 +1,7 @@
 {
   "name": "instantclick",
   "version": "4.0.0",
-  "description": "InstantClick makes following links in your website instant.",
+  "description": "(Thread fork) InstantClick makes following links in your website instant.",
   "main": "src/instantclick.js",
   "directories": {
     "test": "tests"
