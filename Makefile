@@ -11,3 +11,6 @@ all:
 
 clean:
 	@rm -r build
+
+.PHONY: all clean
+	
