@@ -1,13 +1,14 @@
 {
   "name": "@gerhobbelt/instantclick",
   "version": "4.1.1-2",
-  "description": "(Thread fork) InstantClick makes following links in your website instant.",
+  "description": "InstantClick makes following links in your website instant.",
   "main": "src/instantclick.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "make",
+    "test": "make",
     "pub": "npm publish --access public"
   },
   "repository": {
@@ -17,7 +18,7 @@
   "keywords": [
     "pjax"
   ],
-  "author": "dieulot",
+  "author": "Alex Dieulot <adieulot@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/dieulot/instantclick/issues"
