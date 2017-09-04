@@ -1,13 +1,14 @@
 {
-  "name": "@teamthread/instantclick",
-  "version": "4.1.0",
+  "name": "@gerhobbelt/instantclick",
+  "version": "4.1.1-2",
   "description": "(Thread fork) InstantClick makes following links in your website instant.",
   "main": "src/instantclick.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pub": "npm publish --access public"
   },
   "repository": {
     "type": "git",
